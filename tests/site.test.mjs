@@ -35,6 +35,16 @@ test('shows the configured sources by type immediately after the introduction', 
   assert.match(sources, /原文为准/);
 });
 
+test('removes the scenarios section and keeps remaining sections numbered in order', () => {
+  const html = readPage();
+  assert.doesNotMatch(html, /id="scenarios"|href="#scenarios"|适用场景|需要做判断的时刻，先找到依据/);
+  assert.match(html, /href="#briefing"/);
+  assert.match(html, /href="#method"/);
+  assert.match(html, /01 \/ 实际产出/);
+  assert.match(html, /02 \/ 工作方式/);
+  assert.match(html, /03 \/ 项目说明/);
+});
+
 test('presents a dated, redacted historical briefing with its original source', () => {
   const html = readPage();
   assert.match(html, /真实历史简报 · 脱敏整理/);
