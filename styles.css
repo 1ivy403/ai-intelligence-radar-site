@@ -161,8 +161,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 @media (max-width: 360px) {
+  .intro { padding-block: 13px 15px; }
+  .evidence-inner { padding-block: 5px; }
   .evidence-label, .preview-copy > p:not(.eyebrow) { display: none; }
-  .preview-inner { grid-template-columns: minmax(0, 1fr) 76px; }
+  .preview-inner { grid-template-columns: minmax(0, 1fr) 76px; padding-block: 9px; }
+  .scenarios { padding-top: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
