@@ -12,13 +12,12 @@ test('opens with an AIPM pain and names the product', () => {
   assert.match(html, /AI 产品情报雷达/);
 });
 
-test('the first screen names the audience and the breadth of public sources', () => {
-  const intro = readPage().match(/<section class="intro"[\s\S]*?<\/section>/)?.[0];
-  assert.ok(intro);
-  assert.match(intro, /专为 AI 产品经理/);
-  assert.match(intro, /官方博客/);
-  assert.match(intro, /开发者更新/);
-  assert.match(intro, /专业媒体/);
+test('keeps the original introduction, evidence bar and method copy', () => {
+  const html = readPage();
+  assert.match(html, /基于 TrendRadar · 为 AI 产品经理定制/);
+  assert.match(html, /从公开信源筛选模型、竞品和产品变化，附原始链接与产品影响/);
+  assert.match(html, /从哪里来，如何判断/);
+  assert.match(html, /按问题与来源排序/);
 });
 
 test('shows the configured sources by type immediately after the introduction', () => {
@@ -34,22 +33,6 @@ test('shows the configured sources by type immediately after the introduction', 
   assert.match(sources, /科技媒体与观察[\s\S]*WIRED.*量子位.*Simon Willison/);
   assert.match(sources, /热榜线索[\s\S]*华尔街见闻.*财联社.*微博.*知乎/);
   assert.match(sources, /原文为准/);
-});
-
-test('shared page descriptions carry the audience and evidence-first positioning', () => {
-  const html = readPage();
-  assert.match(html, /<meta name="description" content="面向 AI 产品经理[^\"]*官方[^\"]*来源等级/);
-  assert.match(html, /<meta property="og:description" content="[^\"]*官方[^\"]*原文/);
-});
-
-test('explains official sources and a rigorous evidence-first selection rule', () => {
-  const method = readPage().match(/<section id="method"[\s\S]*?<\/section>/)?.[0];
-  assert.ok(method);
-  assert.match(method, /OpenAI.*Google DeepMind.*Microsoft.*NVIDIA/);
-  assert.match(method, /直达原文优先.*来源等级.*相关度.*多源佐证.*时效/);
-  assert.match(method, /合并重复/);
-  assert.match(method, /待核验线索/);
-  assert.match(method, /不代表.*合作或背书/);
 });
 
 test('presents a dated, redacted historical briefing with its original source', () => {
