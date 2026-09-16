@@ -21,6 +21,21 @@ test('the first screen names the audience and the breadth of public sources', ()
   assert.match(intro, /专业媒体/);
 });
 
+test('shows the configured sources by type immediately after the introduction', () => {
+  const html = readPage();
+  const introEnd = html.indexOf('</section>', html.indexOf('<section class="intro"'));
+  const sourcesStart = html.indexOf('<section class="sources"');
+  const evidenceStart = html.indexOf('<section class="evidence"');
+  assert.ok(introEnd < sourcesStart && sourcesStart < evidenceStart);
+
+  const sources = html.slice(sourcesStart, evidenceStart);
+  assert.match(sources, /10 路订阅源.*5 个公开热榜/);
+  assert.match(sources, /官方与开发者[\s\S]*OpenAI.*Google DeepMind.*Microsoft.*NVIDIA.*Hugging Face/);
+  assert.match(sources, /科技媒体与观察[\s\S]*WIRED.*量子位.*Simon Willison/);
+  assert.match(sources, /热榜线索[\s\S]*华尔街见闻.*财联社.*微博.*知乎/);
+  assert.match(sources, /原文为准/);
+});
+
 test('shared page descriptions carry the audience and evidence-first positioning', () => {
   const html = readPage();
   assert.match(html, /<meta name="description" content="面向 AI 产品经理[^\"]*官方[^\"]*来源等级/);

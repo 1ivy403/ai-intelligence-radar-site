@@ -41,6 +41,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .primary-action:hover { background: var(--accent-dark); color: #fff; }
 .primary-action span { font-size: 16px; }
 
+.sources { border-top: 1px solid var(--line); background: var(--surface); }
+.sources-inner { display: grid; grid-template-columns: minmax(210px, .95fr) minmax(0, 2fr); gap: 44px; padding-block: 23px; }
+.sources-heading h2 { margin-top: 5px; font-size: 22px; line-height: 1.4; }
+.sources-heading > p:last-child { margin-top: 8px; color: var(--muted); font-size: 12px; }
+.sources-list { margin: 0; }
+.sources-list > div { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 13px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.sources-list > div:last-child { border-bottom: 0; }
+.sources-list dt { color: var(--accent); font-size: 11px; font-weight: 700; }
+.sources-list dd { margin: 0; color: var(--ink); font-size: 12px; line-height: 1.6; }
+
 .evidence { border-block: 1px solid var(--line); background: var(--soft); }
 .evidence-inner { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .evidence-label { flex: none; font-size: 12px; font-weight: 700; }
@@ -127,6 +137,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .intro h1 { margin-top: 5px; font-size: 38px; line-height: 1.25; }
   .promise { margin-top: 8px; font-size: 14px; line-height: 1.58; }
   .primary-action { min-height: 40px; margin-top: 15px; padding: 8px 14px; font-size: 12px; }
+  .sources-inner { grid-template-columns: 1fr; gap: 14px; padding-block: 19px; }
+  .sources-heading h2 { font-size: 19px; }
+  .sources-list > div { grid-template-columns: 104px minmax(0, 1fr); }
   .evidence-inner { gap: 4px; padding-block: 8px; }
   .evidence-label { font-size: 11px; }
   .evidence ul { gap: 2px 13px; font-size: 10px; }
@@ -162,6 +175,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 @media (max-width: 360px) {
   .intro { padding-block: 13px 15px; }
+  .sources-list > div { grid-template-columns: 1fr; gap: 0; }
   .evidence-inner { padding-block: 5px; }
   .evidence-label, .preview-copy > p:not(.eyebrow) { display: none; }
   .preview-inner { grid-template-columns: minmax(0, 1fr) 76px; padding-block: 9px; }
