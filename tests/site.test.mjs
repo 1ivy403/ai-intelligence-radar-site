@@ -50,3 +50,7 @@ test('attributes the official illustration and leaves the briefing readable as t
   assert.match(html, /为什么重要/);
   assert.match(html, /产品影响/);
 });
+
+test('uses a versioned stylesheet so readers get the matching layout after updates', () => {
+  assert.match(readPage(), /href="styles\.css\?v=[0-9a-f]{8}"/);
+});
