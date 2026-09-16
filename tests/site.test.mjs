@@ -12,6 +12,31 @@ test('opens with an AIPM pain and names the product', () => {
   assert.match(html, /AI 产品情报雷达/);
 });
 
+test('the first screen names the audience and the breadth of public sources', () => {
+  const intro = readPage().match(/<section class="intro"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(intro);
+  assert.match(intro, /专为 AI 产品经理/);
+  assert.match(intro, /官方博客/);
+  assert.match(intro, /开发者更新/);
+  assert.match(intro, /专业媒体/);
+});
+
+test('shared page descriptions carry the audience and evidence-first positioning', () => {
+  const html = readPage();
+  assert.match(html, /<meta name="description" content="面向 AI 产品经理[^\"]*官方[^\"]*来源等级/);
+  assert.match(html, /<meta property="og:description" content="[^\"]*官方[^\"]*原文/);
+});
+
+test('explains official sources and a rigorous evidence-first selection rule', () => {
+  const method = readPage().match(/<section id="method"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(method);
+  assert.match(method, /OpenAI.*Google DeepMind.*Microsoft.*NVIDIA/);
+  assert.match(method, /直达原文优先.*来源等级.*相关度.*多源佐证.*时效/);
+  assert.match(method, /合并重复/);
+  assert.match(method, /待核验线索/);
+  assert.match(method, /不代表.*合作或背书/);
+});
+
 test('presents a dated, redacted historical briefing with its original source', () => {
   const html = readPage();
   assert.match(html, /真实历史简报 · 脱敏整理/);
