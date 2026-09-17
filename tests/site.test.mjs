@@ -45,13 +45,27 @@ test('removes the scenarios section and keeps remaining sections numbered in ord
   assert.match(html, /03 \/ 项目说明/);
 });
 
-test('presents a dated, redacted historical briefing with its original source', () => {
+test('presents the complete September 17 briefing with five source-linked items', () => {
   const html = readPage();
   assert.match(html, /真实历史简报 · 脱敏整理/);
-  assert.match(html, /2026\.09\.16/);
-  assert.match(html, /Introducing Gemini 3\.8 Live and 3\.8 Live Extended Thinking/);
-  assert.match(html, /https:\/\/deepmind\.google\/blog\/introducing-gemini-3-8-live-and-3-8-live-extended-thinking\//);
-  assert.match(html, /下一步验证/);
+  assert.match(html, /2026-09-17 13:44:18/);
+  assert.match(html, /抓取 109 条.*筛出 5 条.*15 个来源，14 个正常/);
+  const report = html.slice(html.indexOf('<section id="briefing"'), html.indexOf('<section id="method"'));
+  assert.equal([...report.matchAll(/<article class="brief-item"/g)].length, 5);
+  assert.equal([...report.matchAll(/<dt>发生了什么<\/dt>/g)].length, 5);
+  assert.equal([...report.matchAll(/<dt>为什么重要<\/dt>/g)].length, 5);
+  assert.equal([...report.matchAll(/<dt>产品影响<\/dt>/g)].length, 5);
+  for (const url of [
+    'https://developer.nvidia.com/blog/how-to-use-ai-agents-to-prepare-3d-scenes-for-simulation/',
+    'https://www.qbitai.com/2026/09/490974.html',
+    'https://www.wired.com/story/washington-wont-be-regulating-ai-anytime-soon/',
+    'https://www.qbitai.com/2026/09/490839.html',
+    'https://simonwillison.net/2026/Sep/16/one-claude/',
+  ]) assert.ok(report.includes(url), `Missing original source: ${url}`);
+  assert.match(report, /今日重点[\s\S]*今日观察[\s\S]*行动建议/);
+  assert.match(report, /由 TrendRadar 生成/);
+  assert.match(report, /自动生成.*核验/);
+  assert.doesNotMatch(html, /2026\.09\.16|Gemini 3\.8 Live/);
 });
 
 test('credits the upstream project and does not offer a subscription', () => {
@@ -78,7 +92,7 @@ test('keeps fragment links valid and has one main heading', () => {
 test('attributes the official illustration and leaves the briefing readable as text', () => {
   const html = readPage();
   assert.match(html, /<img\b[^>]*alt="[^"]+"/);
-  assert.match(html, /图片来源：Google/);
+  assert.match(html, /图片来源：NVIDIA Developer Blog/);
   assert.match(html, /发生了什么/);
   assert.match(html, /为什么重要/);
   assert.match(html, /产品影响/);
